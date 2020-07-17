@@ -11,7 +11,15 @@ https://docs.djangoproject.com/en/3.0/ref/settings/
 """
 
 import os
-import django_heroku
+from dotenv import load_dotenv
+from os.path import abspath
+from os.path import dirname
+from os.path import join
+from os.path import pardir
+
+dotenv_path = abspath(join(dirname(__file__), pardir, '.env'))
+load_dotenv(dotenv_path)
+
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -21,12 +29,13 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # See https://docs.djangoproject.com/en/3.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-#SECRET_KEY = 'p1x2fens=e!mu=cg9zgt(t_^p3)@l^7r@!eo--08)7*=v)o!qj'
-SECRET_KEY = os.environ.get('SECRET_KEY')
+SECRET_KEY = 'p1x2fens=e!mu=cg9zgt(t_^p3)@l^7r@!eo--08)7*=v)o!qj'
+#SECRET_KEY = os.environ.get('SECRET_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+#DEBUG = True
+DEBUG = int(os.environ.get('DEBUG', default=1))
 
-ALLOWED_HOSTS = ['nistaa-blog.herokuapp.com']
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -154,4 +163,4 @@ AWS_DEFAULT_ACL = None
 
 DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
 
-django_heroku.settings(locals())
+#django_heroku.settings(locals())   
